@@ -1,0 +1,7 @@
+POST http://localhost:8080/tasks
+content-type: application/json
+
+{
+      "text": "send",
+      "isComplete" : false
+}
