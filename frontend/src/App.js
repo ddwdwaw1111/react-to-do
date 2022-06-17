@@ -16,7 +16,7 @@ function App() {
   const fetchData = async () => {
     // debugger;
     const result = await axios.get(
-      'http://localhost:8080/tasks',
+      '/tasks',
     );
 
     console.log(result)
@@ -42,7 +42,7 @@ function App() {
     //Post it to server
     try {
       // debugger
-      const resp = await axios.post('http://localhost:8080/tasks', newTask);
+      const resp = await axios.post('/tasks', newTask);
       console.log(resp);
   } catch (err) {
       // Handle Error Here
