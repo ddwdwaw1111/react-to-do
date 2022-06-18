@@ -7,9 +7,8 @@ import (
 )
 
 type Task struct {
-	Id   int    `json:"id"`
-	Text string `json:"text"`
-	// Tags []string  `json:"tags"`
+	Id         int       `json:"id"`
+	Text       string    `json:"text"`
 	Due        time.Time `json:"due"`
 	IsComplete bool      `json:"isComplete"`
 }
@@ -60,6 +59,20 @@ func (ts *TaskStore) GetTask(id int) (Task, error) {
 		return t, nil
 	} else {
 		return Task{}, fmt.Errorf("task with id=%d not found", id)
+	}
+}
+
+func (ts *TaskStore) UpdateTask(newTask Task) (Task, error) {
+	ts.Lock()
+	defer ts.Unlock()
+
+	t, ok := ts.tasks[newTask.Id]
+	if ok {
+		ts.tasks[newTask.Id] = newTask
+		fmt.Println(ts)
+		return t, nil
+	} else {
+		return Task{}, fmt.Errorf("task with id=%d not found", newTask.Id)
 	}
 }
 
