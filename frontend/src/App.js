@@ -18,54 +18,54 @@ function App() {
     const result = await axios.get(
       '/tasks',
     );
-
-    console.log(result)
-
+    console.log("init fetch")
+    console.log(result.data)
     setTodos(result.data);
   };
 
 
   const addTodo = async text =>{
-    // type Task struct {
-    //   Id   int    `json:"id"`
-    //   Text string `json:"text"`
-    //   // Tags []string  `json:"tags"`
-    //   Due        time.Time `json:"due"`
-    //   IsComplete bool      `json:"isComplete"`
-    // }
-
     //Create a task object based on text
     var newTask = {
       text: text,
       isComplete : false
     }
+
     //Post it to server
     try {
       // debugger
       const resp = await axios.post('/tasks', newTask);
-      console.log(resp);
-  } catch (err) {
+      console.log("add")
+      // console.log(resp)
+      setTodos(resp.data)  
+    } catch (err) {
       // Handle Error Here
       console.error(err);
-  }
-    //Call Fetch function again
-
-    // const newTodos = [...todos, {text}];
-    // setTodos(newTodos);
+    }
   }
 
-  const completeTodo = index =>{
-    const newTodos = [...todos];
-    newTodos[index].isComplete = true;
-    setTodos(newTodos)
+  const completeTodo = async index =>{
+    setTodos()
+
 
   }
 
-  const removeTodo = index =>{
-    const newTodos = [...todos];
-    newTodos.splice(index,1)
-    setTodos(newTodos)
+  const deleteTodo = async index =>{
+    const deletedTodo = todos[index];
+    console.log(deletedTodo)
+    try {
+      // debugger
+      const resp = await axios.delete('/tasks', {data: {id: deletedTodo.id}});
+      console.log("delete")
+      // console.log(resp)
+      setTodos(resp.data)  
+    } catch (err) {
+      // Handle Error Here
+      console.error(err);
+    }
   }
+  
+  
 
   return (
     <div className="app">
@@ -77,7 +77,7 @@ function App() {
                 index={index}
                 todo={todo}
                 completeTodo={completeTodo}
-                removeTodo={removeTodo}
+                removeTodo={deleteTodo}
               />
             ))}
 
