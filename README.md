@@ -1,5 +1,3 @@
-
-
-
-Need to connect to database 
-Update not working
+06/18
+1.Need to connect to database \n
+2.Update not working
