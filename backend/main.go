@@ -1,8 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"time"
 
+	"github.com/db/sqldb"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/internal/taskstore"
 	"github.com/kataras/iris/v12"
 )
@@ -68,8 +71,10 @@ func (ts *taskServer) updateComplete(ctx iris.Context) {
 }
 
 func main() {
+	db := sqldb.ConnectDB()
+	fmt.Print(db)
 	//Create a new store and add three test to it.
-	tasks := NewTaskServer()
+	tasks := NewTaskServer(db)
 	tasks.store.CreateTask("test0", time.Now().Add(time.Hour*24))
 	tasks.store.CreateTask("test1", time.Now().Add(time.Hour*24))
 	tasks.store.CreateTask("test2", time.Now().Add(time.Hour*24))
