@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/db/sqldb"
 	"github.com/db/taskserver"
@@ -14,11 +13,7 @@ func main() {
 	db := sqldb.ConnectDB()
 	fmt.Print(db)
 	//Create a new store and add three test to it.
-	tasks := taskserver.NewTaskServer()
-	tasks.Store.CreateTask("test0", time.Now().Add(time.Hour*24))
-	tasks.Store.CreateTask("test1", time.Now().Add(time.Hour*24))
-	tasks.Store.CreateTask("test2", time.Now().Add(time.Hour*24))
-	// fmt.Println(alltasks)
+	tasks := taskserver.NewTaskServer(db)
 
 	//Start iris serve
 	app := iris.New()
